@@ -3,12 +3,12 @@
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <style> circle {fill: lightblue; stroke: black;} </style>
 <body onload='init()'>
-<svg width=300 height=300>
+<svg width=1500 height=700>
 </svg>
 <script>
 async function init() {
- var xlogScale = d3.scaleLog().domain([10, 150]).range([200, 0]);
- var ylogScale = d3.scaleLog().domain([10, 150]).range([0, 200]);
+ var xlogScale = d3.scaleLog().domain([10, 150]).range([600, 0]);
+ var ylogScale = d3.scaleLog().domain([10, 150]).range([0, 1400]);
  const data = await d3.csv('https://raw.githubusercontent.com/tkbalaje2790/NarrativeVizProject/master/cars2017.csv');
  d3.select("svg")
   .append("g")
@@ -24,7 +24,7 @@ async function init() {
   .attr("transform","translate(50,50)")
  .call(d3.axisLeft(xlogScale).tickValues([10,20,50,100]).tickFormat(d3.format("~s")));
  d3.select("svg").append("g")
-  .attr("transform","translate(50,250)")
+  .attr("transform","translate(50,650)")
  .call(d3.axisBottom(ylogScale).tickValues([10,20,50,100]).tickFormat(d3.format("~s")) );
 }
 </script>
