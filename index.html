@@ -44,8 +44,8 @@
       // Add X axis --> it is a date format
       var dataFilter = data.filter(function(d){return d.Fuel==allGroup[0]})
 
-      var x = d3.scaleLinear()
-        .domain( dataFilter.Make )
+      var x = d3.scaleBand()
+        .domain( dataFilter.map(function(d) {return d.Make;}) )
         .range([ 0, width ]);
       svg.append("g")
         .attr("transform", "translate(0," + height + ")")
@@ -77,8 +77,8 @@
         // Create new data with the selection?
         var dataFilter = data.filter(function(d){return d.Fuel==selectedGroup})
 
-        var x = d3.scaleLinear()
-        .domain(d3.extent(dataFilter, function(d) { return d.Make; }))
+        var x = d3.scaleBand()
+        .domain( dataFilter.map(function(d) {return d.Make;}) )
         .range([ 0, width ]);
       svg.append("g")
         .attr("transform", "translate(0," + height + ")")
