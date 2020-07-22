@@ -20,7 +20,7 @@
       .append("g")
         .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
-    d3.csv("https://github.com/tkbalaje2790/NarrativeVizProject/blob/master/cars2017.csv", function(data) {
+    d3.csv("cars2017.csv", function(data) {
 
       // List of groups (here I have one group per column)
       var allGroup = d3.map(data, function(d){return(d.Fuel)}).keys()
