@@ -42,8 +42,10 @@
         .range(d3.schemeSet2);
 
       // Add X axis --> it is a date format
+      var dataFilter = data.filter(function(d){return d.Fuel==selectedGroup})
+
       var x = d3.scaleLinear()
-        .domain(d3.extent(data, function(d) { return d.AverageHighwayMPG; }))
+        .domain( function(d) { return d.Make; })
         .range([ 0, width ]);
       svg.append("g")
         .attr("transform", "translate(0," + height + ")")
@@ -60,7 +62,7 @@
       var line = svg
         .append('g')
         .append("path")
-          .datum(data)//.filter(function(d){return d.Fuel==allGroup[0]}))
+          .datum(data.filter(function(d){return d.Fuel==allGroup[0]}))
           .attr("d", d3.line()
             .x(function(d) { return x(d.AverageHighwayMPG) })
             .y(function(d) { return y(+d.AverageCityMPG) })
@@ -74,6 +76,13 @@
 
         // Create new data with the selection?
         var dataFilter = data.filter(function(d){return d.Fuel==selectedGroup})
+
+        var x = d3.scaleLinear()
+        .domain(d3.extent(dataFilter, function(d) { return d.Make; }))
+        .range([ 0, width ]);
+      svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x).ticks(7));
 
         // Give these new data to update line
         line
