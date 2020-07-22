@@ -1,32 +1,27 @@
 <!DOCTYPE html>
+<meta charset="utf-8">
 <html>
-<script src='https://d3js.org/d3.v5.min.js'></script>
-<style> circle {fill: lightblue; stroke: black;} </style>
-<body onload='init()'>
-<svg width=1500 height=700>
-</svg>
-<script>
-async function init() {
- var xlogScale = d3.scaleLog().domain([10, 150]).range([600, 0]);
- var ylogScale = d3.scaleLog().domain([10, 150]).range([0, 1400]);
- const data = await d3.csv('https://raw.githubusercontent.com/tkbalaje2790/NarrativeVizProject/master/cars2017.csv');
- d3.select("svg")
-  .append("g")
-  .attr("transform","translate(50,50)")
-  .selectAll("dot")
-  .data(data)
-  .enter()
-  .append("circle")
-  .attr("cx", function (d) { return ylogScale(d.AverageCityMPG); } )
-  .attr("cy", function (d) { return xlogScale(d.AverageHighwayMPG); } )
-  .attr("r", function (d) { return Number(d.EngineCylinders)+2; })
- d3.select("svg").append("g")
-  .attr("transform","translate(50,50)")
- .call(d3.axisLeft(xlogScale).tickValues([10,20,50,100]).tickFormat(d3.format("~s")));
- d3.select("svg").append("g")
-  .attr("transform","translate(50,650)")
- .call(d3.axisBottom(ylogScale).tickValues([10,20,50,100]).tickFormat(d3.format("~s")) );
-}
-</script>
-</body>
+ <script src='https://d3js.org/d3.v5.min.js'></script>
+ <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+ <body>
+  <div id="my_dataviz">
+   <select id="selectButton"></select>
+  </div>
+  <script>
+  var margin = {top: 10, right: 30, bottom: 30, left: 60},
+      width = 460 - margin.left - margin.right,
+      height = 400 - margin.top - margin.bottom;
+
+  // append the svg object to the body of the page
+  var svg = d3.select("#my_dataviz")
+    .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
+  d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/5_OneCatSevNumOrdered.csv", function(data) {
+ 
+  </script>
+ </body>
 </html>
