@@ -21,7 +21,7 @@
       .append("g")
         .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
-    d3.csv("data/cars2017.csv", function(data) {
+    d3.csv("./data/cars2017.csv", function(data) {
 
       // List of groups (here I have one group per column)
       var allGroup = d3.map(data, function(d){return(d.Fuel)}).keys()
@@ -59,7 +59,7 @@
       var line = svg
         .append('g')
         .append("path")
-          .datum(data.filter(function(d){return d.Fuel==allGroup[0]}))
+          .datum(data)//.filter(function(d){return d.Fuel==allGroup[0]}))
           .attr("d", d3.line()
             .x(function(d) { return x(d.AverageHighwayMPG) })
             .y(function(d) { return y(+d.AverageCityMPG) })
