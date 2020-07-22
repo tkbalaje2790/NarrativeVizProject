@@ -23,7 +23,7 @@
     d3.csv("https://raw.githubusercontent.com/tkbalaje2790/NarrativeVizProject/master/cars2017.csv", function(data) {
 
       // List of groups (here I have one group per column)
-      var allGroup = d3.map(data, function(d){return(d.Fuel)}).keys()
+      var allGroup = d3.map(data, function(d){return(d.fuel)}).keys()
 
       // add the options to the button
       d3.select("#selectButton")
