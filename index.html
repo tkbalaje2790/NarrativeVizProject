@@ -42,10 +42,10 @@
         .range(d3.schemeSet2);
 
       // Add X axis --> it is a date format
-      var dataFilter = data.filter(function(d){return d.Fuel==selectedGroup})
+      var dataFilter = data.filter(function(d){return d.Fuel==allGroup[0]})
 
       var x = d3.scaleLinear()
-        .domain( function(d) { return d.Make; })
+        .domain( dataFilter.Make )
         .range([ 0, width ]);
       svg.append("g")
         .attr("transform", "translate(0," + height + ")")
