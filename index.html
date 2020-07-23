@@ -112,7 +112,7 @@
           // variable u: map data to existing bars
           var u3 = gasolineSvg.selectAll("rect")
               .data(data)
-              .style('fill',function(d){ return myColor(d["EngineCylinders"]); })
+              //.style('fill',function(d){ return myColor(d["EngineCylinders"]); })
               .on("mouseover", function(d) {
                   var html  = "<span><b> Date : </b>" + d.Date+ "</span><br/>" +
                       "<b style='color: darkred'> Total Cases: <b/>" + d[selectedGroup];
@@ -144,7 +144,7 @@
               .attr("y", function(d) { return y(d[selectedGroup]); })
               .attr("width", x.bandwidth())
               .attr("height", function(d) { return height - y(d[selectedGroup]); })
-              //.attr("fill", "#69b3a2")
+              .attr('fill',function(d){ return myColor(d["EngineCylinders"]); })
         })
       
         /*// Create new data with the selection?
