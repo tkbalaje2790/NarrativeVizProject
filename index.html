@@ -235,8 +235,8 @@
       .data(sumstat)
       .enter()
       .append("rect")
-          .attr("x", function(d){return(x_bp(d.value.q1))}) // console.log(x(d.value.q1)) ;
-          .attr("width", function(d){ ; return(x_bp(d.value.q3)-x_bp(d.value.q1))}) //console.log(x(d.value.q3)-x(d.value.q1))
+          .attr("x", function(d){console.log(x(d.value.q1)) ;return(x_bp(d.value.q1))}) // console.log(x(d.value.q1)) ;
+          .attr("width", function(d){ console.log(x(d.value.q3)-x(d.value.q1)); return(x_bp(d.value.q3)-x_bp(d.value.q1))}) //console.log(x(d.value.q3)-x(d.value.q1))
           .attr("y", function(d) { return y_bp(d.key); })
           .attr("height", y_bp.bandwidth() )
           .attr("stroke", "black")
