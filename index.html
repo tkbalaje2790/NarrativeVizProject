@@ -53,13 +53,7 @@
       .append("g")
         .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
-    var tip = d3.tip()
-      .attr('class', 'd3-tip')
-      .offset([-10, 0])
-      .html(function(d) {
-        return "<strong>Make:</strong> <span style='color:red'>" + (d['Make']).split("_")[0] + "</span><br><strong>Engine Cylinders:</strong> <span style='color:red'>" + d['EngineCylinders'] + "</span><br><strong>Mileage:</strong> <span style='color:red'>" + d['AverageHighwayMPG'] + "</span>";
-      })
-      gasolineSvg.call(tip);
+    
     
     //d3.csv("./data/cars2017_Gasoline.csv", function(data) {
 
@@ -146,7 +140,13 @@
           y.domain([0, d3.max(data, function(d) { return +d[selectedGroup] }) ]);
           yAxis.transition().duration(1000).call(d3.axisLeft(y));
 
-
+          var gasolineTip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .html(function(d) {
+              return "<strong>Make:</strong> <span style='color:red'>" + (d['Make']).split("_")[0] + "</span><br><strong>Engine Cylinders:</strong> <span style='color:red'>" + d['EngineCylinders'] + "</span><br><strong>"+selectedGroup+":</strong> <span style='color:red'>" + d[selectedGroup] + "</span>";
+            })
+          gasolineSvg.call(gasolineTip);
           // variable u: map data to existing bars
           var u3 = gasolineSvg.selectAll("rect")
               .data(data)
