@@ -189,7 +189,7 @@
     // Show the Y scale
     var y_bp = d3.scaleBand()
       .range([ height, 0 ])
-      .domain(["Gasoline", "Deisel", "Electricity"])
+      .domain(["Gasoline", "Deisel"])
       .padding(.4);
     svg.append("g")
       .call(d3.axisLeft(y_bp).tickSize(0))
