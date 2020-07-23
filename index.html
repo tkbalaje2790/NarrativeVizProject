@@ -184,8 +184,6 @@
               .attr("width", x.bandwidth())
               .attr("height", function(d) { return height - y(d[selectedGroup]); })
               .attr('fill',function(d){ return myColor(d["EngineCylinders"]); })
-              .on('mouseover', tip.show)
-              .on('mouseout', tip.hide);
         })
       
         /*// Create new data with the selection?
