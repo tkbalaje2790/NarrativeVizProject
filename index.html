@@ -112,7 +112,7 @@
           // variable u: map data to existing bars
           var u3 = gasolineSvg.selectAll("rect")
               .data(data)
-              .attr('fill',function(d){ return myColor[d.EngineCylinders]; })
+              .attr('fill',function(d){ return myColor(d[EngineCylinders]); })
               .on("mouseover", function(d) {
                   var html  = "<span><b> Date : </b>" + d.Date+ "</span><br/>" +
                       "<b style='color: darkred'> Total Cases: <b/>" + d[selectedGroup];
