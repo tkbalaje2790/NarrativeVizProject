@@ -42,7 +42,7 @@
    <svg id="gasoline"></svg>
   </div>
   <script>
-    var margin = {top: 10, right: 10, bottom: 100, left: 30},
+    var margin = {top: 10, right: 300, bottom: 100, left: 30},
         width = screen.width - margin.left - margin.right,
         height = 400 - margin.top - margin.bottom;
 
@@ -151,7 +151,7 @@
           var u3 = gasolineSvg.selectAll("rect")
               .data(data)
               .on('mouseover', tip.show)
-              .on('mouseout', tip.hide);
+              .on('mouseout', tip.hide)
               /*.on("mouseover", function(d) {
                   var html  = "<span><b> Make : </b>" + d['Make'] + "</span><br/>" +
                       "<b style='color: darkred'> " + selectedGroup + " <b/>" + d[selectedGroup];
