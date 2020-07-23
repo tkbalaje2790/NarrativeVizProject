@@ -11,7 +11,7 @@
    <svg id="gasoline"></svg>
   </div>
   <script>
-    var margin = {top: 10, right: 30, bottom: 30, left: 60},
+    var margin = {top: 10, right: 30, bottom: 70, left: 60},
         width = 1200 - margin.left - margin.right,
         height = 400 - margin.top - margin.bottom;
 
@@ -39,7 +39,7 @@
 
       // A color scale: one color for each group
       var myColor = d3.scaleOrdinal()
-        .domain(allGroup)
+        .domain(['2','3','4','6','8','10','12'])
         .range(d3.schemeSet2);
 
       // Add X axis --> it is a date format
@@ -100,7 +100,7 @@
           // X axis
           x.domain(data.map(function(d) { return d.Make; }))
           xAxis.transition().duration(1000).call(d3.axisBottom(x)).selectAll("text")
-              .attr("transform", "translate(-15,10)rotate(-90)")
+              .attr("transform", "translate(-15,10)rotate(-45)")
               .style("text-anchor", "end");
 
 
@@ -112,6 +112,7 @@
           // variable u: map data to existing bars
           var u3 = gasolineSvg.selectAll("rect")
               .data(data)
+              .attr('fill',function(d){ return myColor[d.EngineCylinders]; })
               .on("mouseover", function(d) {
                   var html  = "<span><b> Date : </b>" + d.Date+ "</span><br/>" +
                       "<b style='color: darkred'> Total Cases: <b/>" + d[selectedGroup];
