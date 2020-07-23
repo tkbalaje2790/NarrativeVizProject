@@ -57,7 +57,7 @@
       .attr('class', 'd3-tip')
       .offset([-10, 0])
       .html(function(d) {
-        return "<strong>Make:</strong> <span style='color:red'>" + d['Make'] + "</span><br><strong>Mileage:</strong> <span style='color:red'>" + d['AverageHighwayMPG'] + "</span>";
+        return "<strong>Make:</strong> <span style='color:red'>" + (d['Make']).split("_")[0] + "</span><br><strong>Engine Cylinders:</strong> <span style='color:red'>" + d['EngineCylinders'] + "</span><br><strong>Mileage:</strong> <span style='color:red'>" + d['AverageHighwayMPG'] + "</span>";
       })
       gasolineSvg.call(tip);
     
