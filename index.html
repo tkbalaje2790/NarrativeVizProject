@@ -150,8 +150,8 @@
           // variable u: map data to existing bars
           var u3 = gasolineSvg.selectAll("rect")
               .data(data)
-              .on('mouseover', tip.show)
-              .on('mouseout', tip.hide)
+              .on('mouseover', gasolineTip.show)
+              .on('mouseout', gasolineTip.hide);
               /*.on("mouseover", function(d) {
                   var html  = "<span><b> Make : </b>" + d['Make'] + "</span><br/>" +
                       "<b style='color: darkred'> " + selectedGroup + " <b/>" + d[selectedGroup];
