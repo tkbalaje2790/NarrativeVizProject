@@ -224,8 +224,8 @@
       .append("line")
         .attr("x1", function(d){return(x_bp(d.value.min))})
         .attr("x2", function(d){return(x_bp(d.value.max))})
-        .attr("y1", function(d){return(y_bp(d.key) + y_bp.bandwidth()/2)})
-        .attr("y2", function(d){return(y_bp(d.key) + y_bp.bandwidth()/2)})
+        .attr("y1", function(d){console.log(y_bp(d.key) + y_bp.bandwidth()/2); return(y_bp(d.key) + y_bp.bandwidth()/2)})
+        .attr("y2", function(d){console.log(y_bp(d.key) + y_bp.bandwidth()/2); return(y_bp(d.key) + y_bp.bandwidth()/2)})
         .attr("stroke", "black")
         .style("width", 40)
 
@@ -235,8 +235,8 @@
       .data(sumstat)
       .enter()
       .append("rect")
-          .attr("x", function(d){console.log(x(d.value.q1)) ;return(x_bp(d.value.q1))}) // console.log(x(d.value.q1)) ;
-          .attr("width", function(d){ console.log(x(d.value.q3)-x(d.value.q1)); return(x_bp(d.value.q3)-x_bp(d.value.q1))}) //console.log(x(d.value.q3)-x(d.value.q1))
+          .attr("x", function(d){console.log(x_bp(d.value.q1)) ;return(x_bp(d.value.q1))}) // console.log(x(d.value.q1)) ;
+          .attr("width", function(d){ console.log(x_bp(d.value.q3)-x_bp(d.value.q1)); return(x_bp(d.value.q3)-x_bp(d.value.q1))}) //console.log(x(d.value.q3)-x(d.value.q1))
           .attr("y", function(d) { return y_bp(d.key); })
           .attr("height", y_bp.bandwidth() )
           .attr("stroke", "black")
