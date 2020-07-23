@@ -100,7 +100,7 @@
 
     // A color scale: one color for each group
     var myColor = d3.scaleOrdinal()
-      .domain(['2','3','4','6','8','10','12'])
+      .domain(['0','2','3','4','6','8','10','12'])
       .range(d3.schemeSet2);
 
     var x = d3.scaleBand()
@@ -187,21 +187,21 @@
       console.log(sumstat) ;
 
     // Show the Y scale
-    var y = d3.scaleBand()
+    var y_bp = d3.scaleBand()
       .range([ height, 0 ])
       .domain(["Gasoline", "Deisel", "Electricity"])
       .padding(.4);
     svg.append("g")
-      .call(d3.axisLeft(y).tickSize(0))
+      .call(d3.axisLeft(y_bp).tickSize(0))
       .select(".domain").remove()
 
     // Show the X scale
-    var x = d3.scaleLinear()
+    var x_bp = d3.scaleLinear()
       .domain([4,8])
       .range([0, width])
     svg.append("g")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x))
+      .call(d3.axisBottom(x_bp))
       .select(".domain").remove()
 
     // Color scale
@@ -222,10 +222,10 @@
       .data(sumstat)
       .enter()
       .append("line")
-        .attr("x1", function(d){return(x(d.value.min))})
-        .attr("x2", function(d){return(x(d.value.max))})
-        .attr("y1", function(d){return(y(d.key) + y.bandwidth()/2)})
-        .attr("y2", function(d){return(y(d.key) + y.bandwidth()/2)})
+        .attr("x1", function(d){return(x_bp(d.value.min))})
+        .attr("x2", function(d){return(x_bp(d.value.max))})
+        .attr("y1", function(d){return(y_bp(d.key) + y_bp.bandwidth()/2)})
+        .attr("y2", function(d){return(y_bp(d.key) + y_bp.bandwidth()/2)})
         .attr("stroke", "black")
         .style("width", 40)
 
@@ -235,10 +235,10 @@
       .data(sumstat)
       .enter()
       .append("rect")
-          .attr("x", function(d){return(x(d.value.q1))}) // console.log(x(d.value.q1)) ;
-          .attr("width", function(d){ ; return(x(d.value.q3)-x(d.value.q1))}) //console.log(x(d.value.q3)-x(d.value.q1))
-          .attr("y", function(d) { return y(d.key); })
-          .attr("height", y.bandwidth() )
+          .attr("x", function(d){return(x_bp(d.value.q1))}) // console.log(x(d.value.q1)) ;
+          .attr("width", function(d){ ; return(x_bp(d.value.q3)-x_bp(d.value.q1))}) //console.log(x(d.value.q3)-x(d.value.q1))
+          .attr("y", function(d) { return y_bp(d.key); })
+          .attr("height", y_bp.bandwidth() )
           .attr("stroke", "black")
           .style("fill", "#69b3a2")
           .style("opacity", 0.3)
@@ -249,10 +249,10 @@
       .data(sumstat)
       .enter()
       .append("line")
-        .attr("y1", function(d){return(y(d.key))})
-        .attr("y2", function(d){return(y(d.key) + y.bandwidth()/2)})
-        .attr("x1", function(d){return(x(d.value.median))})
-        .attr("x2", function(d){return(x(d.value.median))})
+        .attr("y1", function(d){return(y_bp(d.key))})
+        .attr("y2", function(d){return(y_bp(d.key) + y_bp.bandwidth()/2)})
+        .attr("x1", function(d){return(x_bp(d.value.median))})
+        .attr("x2", function(d){return(x_bp(d.value.median))})
         .attr("stroke", "black")
         .style("width", 80)
 
@@ -292,8 +292,8 @@
       .data(data)
       .enter()
       .append("circle")
-        .attr("cx", function(d){ return(x(d.AverageHighwayMPG))})
-        .attr("cy", function(d){ return( y(d.Fuel) + (y.bandwidth()/2) - jitterWidth/2 + Math.random()*jitterWidth )})
+        .attr("cx", function(d){ return(x_bp(d.AverageHighwayMPG))})
+        .attr("cy", function(d){ return( y_bp(d.Fuel) + (y_bp.bandwidth()/2) - jitterWidth/2 + Math.random()*jitterWidth )})
         .attr("r", 4)
         .style("fill", function(d){ return(myColor(+d.EngineCylinders)) })
         .attr("stroke", "black")
