@@ -41,12 +41,17 @@
    <br>
    <svg id="gasoline"></svg>
   </div>
+  <div id="dieselDataviz">
+    <select id="dieselSelect"></select>
+    <br>
+    <svg id="diesel"></svg>
+   </div>
   <script>
-    var margin = {top: 10, right: 30, bottom: 100, left: 30},
+    var margin = {top: 10, right: 60, bottom: 100, left: 30},
         width = screen.width - margin.left - margin.right,
         height = 400 - margin.top - margin.bottom;
 
-    // append the svg object to the body of the page
+    // select the svg object to the body of the page
     var gasolineSvg = d3.select("#gasoline")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -54,169 +59,93 @@
         .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
     
-    
-    //d3.csv("./data/cars2017_Gasoline.csv", function(data) {
+    // List of groups (here I have one group per column)
+    var allGroup = ["AverageHighwayMPG","AverageCityMPG"]
 
-      // List of groups (here I have one group per column)
-      var allGroup = ["AverageHighwayMPG","AverageCityMPG"]
+    // add the options to the button
+    d3.select("#gasolineSelect")
+      .selectAll('myOptions')
+      .data(allGroup)
+      .enter()
+      .append('option')
+      .text(function (d) { return d; }) // text showed in the menu
+      .attr("value", function (d) { return d; }) // corresponding value returned by the button
 
-      // add the options to the button
-      d3.select("#gasolineSelect")
-        .selectAll('myOptions')
-        .data(allGroup)
-        .enter()
-        .append('option')
-        .text(function (d) { return d; }) // text showed in the menu
-        .attr("value", function (d) { return d; }) // corresponding value returned by the button
+    // A color scale: one color for each group
+    var myColor = d3.scaleOrdinal()
+      .domain(['2','3','4','6','8','10','12'])
+      .range(d3.schemeSet2);
 
-      // A color scale: one color for each group
-      var myColor = d3.scaleOrdinal()
-        .domain(['2','3','4','6','8','10','12'])
-        .range(d3.schemeSet2);
-
-      // Add X axis --> it is a date format
-      //var dataFilter = data.filter(function(d){return d.Fuel==allGroup[0]})
-
-      /*var x = d3.scaleBand()
-        .domain( dataFilter.map(function(d) {return d.Make;}) )
-        .range([ 0, width ]);
-      svg.append("g")
+    var x = d3.scaleBand()
+        .range([0, width])
+        .padding(0.3);
+    var xAxis = gasolineSvg.append("g")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x).ticks(7));
 
-      // Add Y axis
-      var y = d3.scaleLinear()
-        .domain([0, d3.max(data, function(d) { return +d.AverageCityMPG; })])
-        .range([ height, 0 ]);
-      svg.append("g")
-        .call(d3.axisLeft(y));*/
+    // Initialize the Y axis
+    var y = d3.scaleLinear()
+        .range([height, 0]);
+    var yAxis = gasolineSvg.append("g")
+        .attr("class", "myYaxis")
 
-      // Initialize the X axis
-      var x = d3.scaleBand()
-          .range([0, width])
-          .padding(0.3);
-      var xAxis = gasolineSvg.append("g")
-          .attr("transform", "translate(0," + height + ")")
-
-
-      // Initialize the Y axis
-      var y = d3.scaleLinear()
-          .range([height, 0]);
-      var yAxis = gasolineSvg.append("g")
-          .attr("class", "myYaxis")
-
-
-      var tooltip = d3.select("#gasolineDataviz").append("div")
-          .attr("class", "tooltip")
-          .style("opacity", 0);
-
-      // Initialize line with first group of the list
-      /*var line = svg
-        .append('g')
-        .append("path")
-          .datum(data.filter(function(d){return d.Fuel==allGroup[0]}))
-          .attr("d", d3.line()
-            .x(function(d) { return x(d.AverageHighwayMPG) })
-            .y(function(d) { return y(+d.AverageCityMPG) })
-          )
-          .attr("stroke", function(d){ return myColor("valueA") })
-          .style("stroke-width", 4)
-          .style("fill", "none")*/
-
-      // A function that update the chart
-      function updateGasoline(selectedGroup) {
-        
-        // Parse the Data
-        d3.csv("./data/cars2017_Gasoline.csv", function(data) {
-
-          // X axis
-          x.domain(data.map(function(d) { return d.Make; }))
-          xAxis.transition().duration(1000).call(d3.axisBottom(x)).selectAll("text")
-              .attr("transform", "translate(-15,10)rotate(-45)")
-              .style("text-anchor", "end");
-
-
-          // Add Y axis
-          y.domain([0, d3.max(data, function(d) { return +d[selectedGroup] }) ]);
-          yAxis.transition().duration(1000).call(d3.axisLeft(y));
-
-          var gasolineTip = d3.tip()
-            .attr('class', 'd3-tip')
-            .offset([-10, 0])
-            .html(function(d) {
-              return "<strong>Make:</strong> <span style='color:red'>" + (d['Make']).split("_")[0] + "</span><br><strong>Engine Cylinders:</strong> <span style='color:red'>" + d['EngineCylinders'] + "</span><br><strong>"+selectedGroup+":</strong> <span style='color:red'>" + d[selectedGroup] + "</span>";
-            })
-          gasolineSvg.call(gasolineTip);
-          // variable u: map data to existing bars
-          var u3 = gasolineSvg.selectAll("rect")
-              .data(data)
-              .on('mouseover', gasolineTip.show)
-              .on('mouseout', gasolineTip.hide);
-              /*.on("mouseover", function(d) {
-                  var html  = "<span><b> Make : </b>" + d['Make'] + "</span><br/>" +
-                      "<b style='color: darkred'> " + selectedGroup + " <b/>" + d[selectedGroup];
-
-                  tooltip.html(html)
-                      .style("left", (d3.event.pageX + 25) + "px")
-                      .style("top", (d3.event.pageY - 18) + "px")
-                      .transition()
-                      .duration(200) // ms
-                      .style("opacity", .9) // started as 0!
-
-              })
-
-              // fade out tooltip on mouse out
-              .on("mouseout", function(d) {
-                  tooltip.transition()
-                      .duration(500)
-                      .style("opacity", 0);
-              })*/
-
-          // update bars
-          u3
-              .enter()
-              .append("rect")
-              .merge(u3)
-              .transition()
-              .duration(1000)
-              .attr("x", function(d) { return x(d['Make']); })
-              .attr("y", function(d) { return y(d[selectedGroup]); })
-              .attr("width", x.bandwidth())
-              .attr("height", function(d) { return height - y(d[selectedGroup]); })
-              .attr('fill',function(d){ return myColor(d["EngineCylinders"]); })
-        })
+    // A function that update the chart
+    function updateGasoline(selectedGroup) {
       
-        /*// Create new data with the selection?
-        var dataFilter = data.filter(function(d){return d.Fuel==selectedGroup})
+      // Parse the Data
+      d3.csv("./data/cars2017_Gasoline.csv", function(data) {
 
-        var x = d3.scaleBand()
-        .domain( dataFilter.map(function(d) {return d.Make;}) )
-        .range([ 0, width ]);
-      svg.append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x).ticks(7));
+        // X axis
+        x.domain(data.map(function(d) { return d.Make; }))
+        xAxis.transition().duration(1000).call(d3.axisBottom(x)).selectAll("text")
+            .attr("transform", "translate(-15,10)rotate(-45)")
+            .style("text-anchor", "end");
 
-        // Give these new data to update line
-        line
-            .datum(dataFilter)
+        // Add Y axis
+        y.domain([0, d3.max(data, function(d) { return +d[selectedGroup] }) ]);
+        yAxis.transition().duration(1000).call(d3.axisLeft(y));
+
+        var gasolineTip = d3.tip()
+          .attr('class', 'd3-tip')
+          .offset([-10, 0])
+          .html(function(d) {
+            return "<strong>Make:</strong> <span style='color:red'>" + (d['Make']).split("_")[0] + "</span><br><strong>Engine Cylinders:</strong> <span style='color:red'>" + d['EngineCylinders'] + "</span><br><strong>"+selectedGroup+":</strong> <span style='color:red'>" + d[selectedGroup] + "</span>";
+          })
+        gasolineSvg.call(gasolineTip);
+        
+        // variable u: map data to existing bars
+        var u3 = gasolineSvg.selectAll("rect")
+            .data(data)
+            .on('mouseover', gasolineTip.show)
+            .on('mouseout', gasolineTip.hide);
+
+        // update bars
+        u3
+            .enter()
+            .append("rect")
+            .merge(u3)
             .transition()
             .duration(1000)
-            .attr("d", d3.line()
-              .x(function(d) { return x(d.AverageHighwayMPG) })
-              .y(function(d) { return y(+d.AverageCityMPG) })
-            )
-            .attr("stroke", function(d){ return myColor(selectedGroup) })*/
-      }
-
-      updateGasoline('AverageHighwayMPG');
-
-      // When the button is changed, run the updateChart function
-      d3.select("#gasolineSelect").on("change", function(d) {
-          // recover the option that has been chosen
-          var selectedOption = d3.select(this).property("value")
-          // run the updateChart function with this selected option
-          updateGasoline(selectedOption)
+            .attr("x", function(d) { return x(d['Make']); })
+            .attr("y", function(d) { return y(d[selectedGroup]); })
+            .attr("width", x.bandwidth())
+            .attr("height", function(d) { return height - y(d[selectedGroup]); })
+            .attr('fill',function(d){ return myColor(d["EngineCylinders"]); })
+            .on('mouseover', gasolineTip.show)
+            .on('mouseout', gasolineTip.hide)
       })
+    
+    }
+
+    updateGasoline('AverageHighwayMPG');
+    updateGasoline('AverageHighwayMPG');
+
+    // When the button is changed, run the updateChart function
+    d3.select("#gasolineSelect").on("change", function(d) {
+        // recover the option that has been chosen
+        var selectedOption = d3.select(this).property("value")
+        // run the updateChart function with this selected option
+        updateGasoline(selectedOption)
+    })
 
   </script>
  </body>
