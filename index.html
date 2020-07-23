@@ -224,8 +224,8 @@
       .append("line")
         .attr("x1", function(d){return(x_bp(d.value.min))})
         .attr("x2", function(d){return(x_bp(d.value.max))})
-        .attr("y1", function(d){console.log(y_bp(d.key) + y_bp.bandwidth()/2); return(y_bp(d.key) + y_bp.bandwidth()/2)})
-        .attr("y2", function(d){console.log(y_bp(d.key) + y_bp.bandwidth()/2); return(y_bp(d.key) + y_bp.bandwidth()/2)})
+        .attr("y1", function(d){console.log(y_bp(d.key)); return(y_bp(d.key) + y_bp.bandwidth()/2)})
+        .attr("y2", function(d){console.log(y_bp(d.key)); return(y_bp(d.key) + y_bp.bandwidth()/2)})
         .attr("stroke", "black")
         .style("width", 40)
 
