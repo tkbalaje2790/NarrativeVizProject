@@ -112,7 +112,7 @@
           // variable u: map data to existing bars
           var u3 = gasolineSvg.selectAll("rect")
               .data(data)
-              /*.on("mouseover", function(d) {
+              .on("mouseover", function(d) {
                   var html  = "<span><b> Make : </b>" + d[Make] + "</span><br/>" +
                       "<b style='color: darkred'> " + selectedGroup + " <b/>" + d[selectedGroup];
 
@@ -130,7 +130,7 @@
                   tooltip.transition()
                       .duration(500)
                       .style("opacity", 0);
-              })*/
+              })
 
           // update bars
           u3
