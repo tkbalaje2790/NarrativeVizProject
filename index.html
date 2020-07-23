@@ -130,8 +130,6 @@
             .attr("width", x.bandwidth())
             .attr("height", function(d) { return height - y(d[selectedGroup]); })
             .attr('fill',function(d){ return myColor(d["EngineCylinders"]); })
-            .on('mouseover', gasolineTip.show)
-            .on('mouseout', gasolineTip.hide)
       })
     
     }
