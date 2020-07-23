@@ -139,7 +139,7 @@
               .merge(u3)
               .transition()
               .duration(1000)
-              .attr("x", function(d) { return x(d.Make); })
+              .attr("x", function(d) { return x(d['Make']); })
               .attr("y", function(d) { return y(d[selectedGroup]); })
               .attr("width", x.bandwidth())
               .attr("height", function(d) { return height - y(d[selectedGroup]); })
