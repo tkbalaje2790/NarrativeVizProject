@@ -189,7 +189,7 @@
     // Show the Y scale
     var y_bp = d3.scaleBand()
       .range([ height, 0 ])
-      .domain(["Gasoline", "Diesel","Electricity"])
+      .domain(["Gasoline", "Diesel"])
       .padding(.4);
     svg.append("g")
       .call(d3.axisLeft(y_bp).tickSize(0))
@@ -197,7 +197,7 @@
 
     // Show the X scale
     var x_bp = d3.scaleLinear()
-      .domain([10,150])
+      .domain([10,40])
       .range([0, width])
     svg.append("g")
       .attr("transform", "translate(0," + height + ")")
