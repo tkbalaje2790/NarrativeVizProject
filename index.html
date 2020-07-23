@@ -113,7 +113,7 @@
           var u3 = gasolineSvg.selectAll("rect")
               .data(data)
               .on("mouseover", function(d) {
-                  var html  = "<span><b> Make : </b>" + d[Make] + "</span><br/>" +
+                  var html  = "<span><b> Make : </b>" + d['Make'] + "</span><br/>" +
                       "<b style='color: darkred'> " + selectedGroup + " <b/>" + d[selectedGroup];
 
                   tooltip.html(html)
