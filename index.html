@@ -5,7 +5,6 @@
   </head>
  <script src="https://d3js.org/d3.v4.js"></script>
  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
- 
  <body>
   <style>
     #myHeader {
@@ -13,35 +12,6 @@
       text-align: center;
       height: 45px;
       width: auto;
-    }
-
-    .d3-tip {
-      line-height: 1;
-      font-weight: bold;
-      padding: 12px;
-      background: rgba(0, 0, 0, 0.8);
-      color: #fff;
-      border-radius: 2px;
-    }
-
-    /* Creates a small triangle extender for the tooltip */
-    .d3-tip:after {
-      box-sizing: border-box;
-      display: inline;
-      font-size: 10px;
-      width: 100%;
-      line-height: 1;
-      color: rgba(0, 0, 0, 0.8);
-      content: "\25BC";
-      position: absolute;
-      text-align: center;
-    }
-
-    /* Style northward tooltips differently */
-    .d3-tip.n:after {
-      margin: -1px 0 0 0;
-      top: 100%;
-      left: 0;
     }
 
     .tooltip {
@@ -117,12 +87,6 @@
       .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
-    /*var gasolineTip = d3.tip()
-      .attr('class', 'd3-tip')
-      .offset([-10, 0])
-      
-    gasolineSvg.call(gasolineTip);*/
-
     // create a tooltip
     var tooltip_g = d3.select("body")
       .append("div")
@@ -135,20 +99,6 @@
         .style("opacity", 0)
         .attr("class", "tooltip")
         .style("font-size", "16px")
-    /*// Three function that change the tooltip when user hover / move / leave a cell
-    var mouseover = function(d) {
-      tooltip
-        .transition()
-        .duration(200)
-        .style("opacity", 1)
-      tooltip
-          .html("<span style='color:grey'>Avg Highway MPG: </span>" + d.AverageHighwayMPG) // + d.Prior_disorder + "<br>" + "HR: " +  d.HR)
-          .style("left", (d3.event.pageX+30) + "px")
-          .style("top", (d3.event.pageY+30) + "px")
-          //.style("left", (d3.mouse(this)[0]+30) + "px")
-          //.style("top", (d3.mouse(this)[1]+30) + "px")
-    }*/
-    
 
     // append the svg object to the body of the page
     var svg = d3.select("#barPlot")
@@ -159,18 +109,6 @@
         .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
     
-   /* // List of groups (here I have one group per column)
-    var allGroup = ["AverageHighwayMPG","AverageCityMPG"]
-
-    // add the options to the button
-    d3.select("#gasolineSelect")
-      .selectAll('myOptions')
-      .data(allGroup)
-      .enter()
-      .append('option')
-      .text(function (d) { return d; }) // text showed in the menu
-      .attr("value", function (d) { return d; }) // corresponding value returned by the button*/
-
     // A color scale: one color for each group
     var myColor = d3.scaleOrdinal()
       .domain(['2','3','4','6','8','10','12'])
@@ -187,6 +125,7 @@
         .range([height, 0]);
     var yAxis = gasolineSvg.append("g")
         .attr("class", "myYaxis")
+        .text("Average MPG");
 
     // A function that update the chart
     function updateGasoline(selectedGroup) {
@@ -262,6 +201,7 @@
         .range([height, 0]);
     var yAxis_d = dieselSvg.append("g")
         .attr("class", "myYaxis")
+        .text("Average MPG");
 
     // A function that update the chart
     function updateDiesel(selectedGroup) {
