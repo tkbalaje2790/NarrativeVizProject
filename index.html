@@ -192,6 +192,7 @@
       .domain(["Gasoline", "Diesel"])
       .padding(.4);
     svg.append("g")
+      .attr("transform", "translate(-15,10)rotate(-90)")
       .call(d3.axisLeft(y_bp).tickSize(0))
       //.select(".domain").remove()
 
