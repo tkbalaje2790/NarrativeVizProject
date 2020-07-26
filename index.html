@@ -38,7 +38,7 @@
     }
 
     .tooltip {
-      position: relative;
+      position: absolute;
       background-color: black;
       border: none;
       border-radius: 5px;
@@ -260,7 +260,7 @@
         .style("width", 80)
 
     // create a tooltip
-    var tooltip = d3.select("#barPlot")
+    var tooltip = d3.select("body")
       .append("div")
         .style("opacity", 0)
         .attr("class", "tooltip")
