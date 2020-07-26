@@ -129,16 +129,17 @@
 
     // Add Y axis label:
     d3.select("#gasoline").append("text")
+        .attr("transform", "translate(-25,20)rotate(-90)")
         .attr("text-anchor", "end")
-        .attr("x", 20)
-        .attr("y", 30)
+        .attr("x", 0)
+        .attr("y", 60)
         .text("Average MPG");
 
     // Add Y axis label:
     d3.select("#diesel").append("text")
         .attr("transform", "translate(-25,20)rotate(-90)")
         .attr("text-anchor", "end")
-        .attr("x", 40)
+        .attr("x", 0)
         .attr("y", 60)
         .text("Average MPG");
 
