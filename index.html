@@ -8,6 +8,13 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
  <body>
   <style>
+    #myHeader {
+      background-image:radial-gradient(rgb(236, 79, 58),white);
+      text-align: center;
+      height: 45px;
+      width: auto;
+    }
+
     .d3-tip {
       line-height: 1;
       font-weight: bold;
@@ -48,15 +55,38 @@
       color: white;
     }
   </style>
+  <div  id="myHeader">
+    <h1>Cars - Imapct of MPG vs Engine cyclinders</h1>
+  </div>
+  <div>
+    <p>
+      Based on the cars_2017 data, which consists of Avg. MPG (both Highway and City) of various car Make and model, I plot the below charts which shows the relations of MPG
+      and increasing number of Engine cyclinder in combustion cars.
+    </p>
+    <p>
+      As per the below chart for cars that run on Gasoline, The Avg. MPG redeuces as the number of Engine cyclinder increases.
+    </p>
+  </div>
   <div id="gasolineDataviz">
    <select id="gasolineSelect"></select>
    <br>
    <svg id="gasoline"></svg>
   </div>
+  <div>
+    <p>
+      You can also find the same pattern for the cars that run on Diesel below.
+    </p>
+  </div>
   <div id="dieselDataviz">
     <select id="dieselSelect"></select>
     <br>
     <svg id="diesel"></svg>
+  </div>
+  <div>
+    <p>
+      Based on the data, I have made a Bar chart that shows both set of cars that run on Gasoline and Diesel. Based on the data, I can conclude that Diesel cars provide better 
+      MPG for the same number of Engine cyclinder than Gasoline cars.
+    </p>
   </div>
   <div id="barPlot">
 
