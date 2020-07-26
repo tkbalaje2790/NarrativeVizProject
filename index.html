@@ -128,17 +128,17 @@
         .text("Average MPG");
 
     // Add Y axis label:
-    d3.select("gasoline").append("text")
-        .attr("text-anchor", "center")
-        .attr("x", height/2)
-        .attr("y", width)
+    d3.select("#gasoline").append("text")
+        .attr("text-anchor", "end")
+        .attr("x", 20)
+        .attr("y", 30)
         .text("Average MPG");
 
     // Add Y axis label:
     d3.select("#diesel").append("text")
-        .attr("text-anchor", "center")
-        .attr("x", height/2)
-        .attr("y", width)
+        .attr("text-anchor", "end")
+        .attr("x", 40)
+        .attr("y", 60)
         .text("Average MPG");
 
     // A function that update the chart
