@@ -128,14 +128,14 @@
         .text("Average MPG");
 
     // Add Y axis label:
-    gasolineSvg.append("text")
+    d3.select("gasoline").append("text")
         .attr("text-anchor", "center")
         .attr("x", height/2)
         .attr("y", width)
         .text("Average MPG");
 
     // Add Y axis label:
-    dieselSvg.append("text")
+    d3.select("#diesel").append("text")
         .attr("text-anchor", "center")
         .attr("x", height/2)
         .attr("y", width)
