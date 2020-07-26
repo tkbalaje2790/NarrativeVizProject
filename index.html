@@ -127,6 +127,20 @@
         .attr("class", "myYaxis")
         .text("Average MPG");
 
+    // Add Y axis label:
+    gasolineSvg.append("text")
+        .attr("text-anchor", "center")
+        .attr("x", height/2)
+        .attr("y", width)
+        .text("Average MPG");
+
+    // Add Y axis label:
+    dieselSvg.append("text")
+        .attr("text-anchor", "center")
+        .attr("x", height/2)
+        .attr("y", width)
+        .text("Average MPG");
+
     // A function that update the chart
     function updateGasoline(selectedGroup) {
       
@@ -290,7 +304,6 @@
     svg.append("g")
       .call(d3.axisLeft(y_bp).tickSize(0)).selectAll('text')
       .attr("transform", "translate(-15,-30)rotate(-90)")
-      //.select(".domain").remove()
 
     // Show the X scale
     var x_bp = d3.scaleLinear()
@@ -299,7 +312,6 @@
     svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x_bp))
-      //.select(".domain").remove()
 
     // Color scale
     var myBarPlotColor = d3.scaleSequential()
@@ -321,8 +333,8 @@
       .append("line")
         .attr("x1", function(d){return(x_bp(d.value.min))})
         .attr("x2", function(d){return(x_bp(d.value.max))})
-        .attr("y1", function(d){console.log(y_bp(d.key)); return(y_bp(d.key) + y_bp.bandwidth()/2)})
-        .attr("y2", function(d){console.log(y_bp(d.key)); return(y_bp(d.key) + y_bp.bandwidth()/2)})
+        .attr("y1", function(d){return(y_bp(d.key) + y_bp.bandwidth()/2)})
+        .attr("y2", function(d){return(y_bp(d.key) + y_bp.bandwidth()/2)})
         .attr("stroke", "black")
         .style("width", 40)
 
@@ -332,8 +344,8 @@
       .data(sumstat)
       .enter()
       .append("rect")
-          .attr("x", function(d){console.log(x_bp(d.value.q1)) ;return(x_bp(d.value.q1))}) // console.log(x(d.value.q1)) ;
-          .attr("width", function(d){ console.log(x_bp(d.value.q3)-x_bp(d.value.q1)); return(x_bp(d.value.q3)-x_bp(d.value.q1))}) //console.log(x(d.value.q3)-x(d.value.q1))
+          .attr("x", function(d){return(x_bp(d.value.q1))})
+          .attr("width", function(d){return(x_bp(d.value.q3)-x_bp(d.value.q1))})
           .attr("y", function(d) { return y_bp(d.key); })
           .attr("height", y_bp.bandwidth() )
           .attr("stroke", "black")
@@ -359,19 +371,7 @@
         .style("opacity", 0)
         .attr("class", "tooltip")
         .style("font-size", "16px")
-    /*// Three function that change the tooltip when user hover / move / leave a cell
-    var mouseover = function(d) {
-      tooltip
-        .transition()
-        .duration(200)
-        .style("opacity", 1)
-      tooltip
-          .html("<span style='color:grey'>Avg Highway MPG: </span>" + d.AverageHighwayMPG) // + d.Prior_disorder + "<br>" + "HR: " +  d.HR)
-          .style("left", (d3.event.pageX+30) + "px")
-          .style("top", (d3.event.pageY+30) + "px")
-          //.style("left", (d3.mouse(this)[0]+30) + "px")
-          //.style("top", (d3.mouse(this)[1]+30) + "px")
-    }*/
+    
     var mousemove = function(d) {
       tooltip
         .style("opacity", 1)
