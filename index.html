@@ -217,13 +217,13 @@
     var x_d = d3.scaleBand()
         .range([0, width])
         .padding(0.3);
-    var xAxis_d = gasolineSvg.append("g")
+    var xAxis_d = dieselSvg.append("g")
         .attr("transform", "translate(0," + height + ")")
 
     // Initialize the Y axis
     var y_d = d3.scaleLinear()
         .range([height, 0]);
-    var yAxis_d = gasolineSvg.append("g")
+    var yAxis_d = dieselSvg.append("g")
         .attr("class", "myYaxis")
 
     // A function that update the chart
@@ -234,13 +234,13 @@
 
         // X axis
         x_d.domain(data.map(function(d) { return d.Make; }))
-        xAxis_d.transition().duration(1000).call(d3.axisBottom(x)).selectAll("text")
+        xAxis_d.transition().duration(1000).call(d3.axisBottom(x_d)).selectAll("text")
             .attr("transform", "translate(-15,10)rotate(-45)")
             .style("text-anchor", "end");
 
         // Add Y axis
         y_d.domain([0, d3.max(data, function(d) { return +d[selectedGroup] }) ]);
-        yAxis_d.transition().duration(1000).call(d3.axisLeft(y));
+        yAxis_d.transition().duration(1000).call(d3.axisLeft(y_d));
 
         gasolineTip.html(function(d) {
           return "<strong>Make:</strong> <span style='color:red'>" + (d['Make']).split("_")[0] + "</span><br><strong>Engine Cylinders:</strong> <span style='color:red'>" + d['EngineCylinders'] + "</span><br><strong>"+selectedGroup+":</strong> <span style='color:red'>" + d[selectedGroup] + "</span>";
