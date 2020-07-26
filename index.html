@@ -90,7 +90,7 @@
   </div>
   <div>
     <p>
-      Based on the data, I have made a Bar chart that shows both set of cars that run on Gasoline and Diesel. Based on the data, I can conclude that Diesel cars provide better 
+      Based on the data, I have made a Box-Plot chart that shows both set of cars that run on Gasoline and Diesel. Based on the data, I can conclude that Diesel cars provide better 
       MPG for the same number of Engine cyclinder than Gasoline cars.
     </p>
   </div>
@@ -122,6 +122,27 @@
       .offset([-10, 0])
       
     gasolineSvg.call(gasolineTip);
+
+    // create a tooltip
+    var tooltip_d = d3.select("body")
+      .append("div")
+        .style("opacity", 0)
+        .attr("class", "tooltip")
+        .style("font-size", "16px")
+    /*// Three function that change the tooltip when user hover / move / leave a cell
+    var mouseover = function(d) {
+      tooltip
+        .transition()
+        .duration(200)
+        .style("opacity", 1)
+      tooltip
+          .html("<span style='color:grey'>Avg Highway MPG: </span>" + d.AverageHighwayMPG) // + d.Prior_disorder + "<br>" + "HR: " +  d.HR)
+          .style("left", (d3.event.pageX+30) + "px")
+          .style("top", (d3.event.pageY+30) + "px")
+          //.style("left", (d3.mouse(this)[0]+30) + "px")
+          //.style("top", (d3.mouse(this)[1]+30) + "px")
+    }*/
+    
 
     // append the svg object to the body of the page
     var svg = d3.select("#barPlot")
@@ -246,11 +267,24 @@
           return "<strong>Make:</strong> <span style='color:red'>" + (d['Make']).split("_")[0] + "</span><br><strong>Engine Cylinders:</strong> <span style='color:red'>" + d['EngineCylinders'] + "</span><br><strong>"+selectedGroup+":</strong> <span style='color:red'>" + d[selectedGroup] + "</span>";
         })
         
+        var mousemove_d = function(d) {
+          tooltip_d
+            .style("opacity", 1)
+            .style("left", (d3.event.pageX+30) + "px")
+            .style("top", (d3.event.pageY+30) + "px")
+            .html("<strong>Make:</strong> <span style='color:red'>" + d.Make + "</span><br><strong>Engine Cylinders:</strong> <span style='color:red'>" + d.EngineCylinders + "</span><br><strong>Avg Highway MPG:</strong> <span style='color:red'>" + d.AverageHighwayMPG + "</span>")
+        }
+        var mouseleave_d = function(d) {
+          tooltip_d
+            .transition()
+            .duration(200)
+            .style("opacity", 0)
+        }
         // variable u: map data to existing bars
         var u_d = dieselSvg.selectAll("rect")
             .data(data)
-            .on('mouseover', gasolineTip.show)
-            .on('mouseout', gasolineTip.hide);
+            .on('mouseover', mousemove_d)
+            .on('mouseout', mouseleave_d);
 
         // update bars
         u_d
@@ -373,7 +407,7 @@
         .style("opacity", 0)
         .attr("class", "tooltip")
         .style("font-size", "16px")
-    // Three function that change the tooltip when user hover / move / leave a cell
+    /*// Three function that change the tooltip when user hover / move / leave a cell
     var mouseover = function(d) {
       tooltip
         .transition()
@@ -385,7 +419,7 @@
           .style("top", (d3.event.pageY+30) + "px")
           //.style("left", (d3.mouse(this)[0]+30) + "px")
           //.style("top", (d3.mouse(this)[1]+30) + "px")
-    }
+    }*/
     var mousemove = function(d) {
       tooltip
         .style("opacity", 1)
