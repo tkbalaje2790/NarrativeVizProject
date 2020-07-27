@@ -44,14 +44,15 @@
     <option value="AverageCityMPG">Average City MPG</option>
    </select>
    <br>
-   <svg id="gasoline" style="align-self: center;"></svg>
+   <svg id="gasoline"></svg>
   </div>
   <div>
     <p>
       You can also find the same pattern for the cars that run on Diesel below.
     </p>
   </div>
-  <div id="dieselDataviz">
+  <div id="dieselDataviz" style="text-align:center">
+    <h2>Diesel Chart</h2>
     <select id="dieselSelect">
       <option value="AverageHighwayMPG">Average Highway MPG</option>
       <option value="AverageCityMPG">Average City MPG</option>
@@ -65,8 +66,8 @@
       MPG for the same number of Engine cyclinder than Gasoline cars.
     </p>
   </div>
-  <div id="barPlot">
-
+  <div id="barPlot" style="text-align:center">
+    <h2>Box-Plot Chart</h2>
   </div>
   <script>
     var margin = {top: 10, right: 60, bottom: 100, left: 60},
