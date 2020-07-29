@@ -113,7 +113,7 @@
             .style("opacity", 1)
             .style("left", (d3.event.pageX+30) + "px")
             .style("top", (d3.event.pageY+30) + "px")
-            .html("<strong>Make:</strong> <span style='color:red'>" + (d.Make).split("_")[0] + "</span><br><strong>Engine Cylinders:</strong> <span style='color:red'>" + d.EngineCylinders + "</span><br><strong>Avg Highway MPG:</strong> <span style='color:red'>" + d.AverageHighwayMPG + "</span>")
+            .html("<strong>Make:</strong> <span style='color:red'>" + (d.Make).split("_")[0] + "</span><br><strong>Engine Cylinders:</strong> <span style='color:red'>" + d.EngineCylinders + "</span><br><strong>" + selectedGroup + ":</strong> <span style='color:red'>" + d[selectedGroup] + "</span>")
         }
         var mouseleave_d = function(d) {
           tooltip_d
