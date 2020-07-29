@@ -84,6 +84,14 @@
         .attr("class", "myYaxis")
         .text("Average MPG");
 
+    // Add Y axis label:
+    d3.select("#diesel").append("text")
+        .attr("transform", "translate(-25,20)rotate(-90)")
+        .attr("text-anchor", "end")
+        .attr("x", 0)
+        .attr("y", 60)
+        .text("Average MPG");
+
     // A function that update the chart
     function updateDiesel(selectedGroup) {
       

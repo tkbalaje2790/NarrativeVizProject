@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+  <head>
+  </head>
+ <script src="https://d3js.org/d3.v4.js"></script>
+ <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+ <body>
+  <style>
+    #myHeader {
+      background-image:radial-gradient(rgb(236, 79, 58),white);
+      text-align: center;
+      height: 45px;
+      width: auto;
+    }
+
+    .tooltip {
+      position: absolute;
+      background-color: black;
+      border: none;
+      border-radius: 5px;
+      padding: 15px;
+      min-width: 400px;
+      text-align: left;
+      color: white;
+    }
+  </style>
+  <div  id="myHeader">
+    <h1>Cars - Imapct of MPG vs Engine cyclinders</h1>
+  </div>
+  <div>
+    <p>
+      Based on the cars_2017 data, which consists of Avg. MPG (both Highway and City) of various car Make and model, I plot the below charts which shows the relations of MPG
+      and increasing number of Engine cyclinder in combustion cars.
+    </p>
+    <p>
+        Based on the data, I have made a Box-Plot chart that shows both set of cars that run on Gasoline and Diesel. Based on the data, I can conclude that Diesel cars provide better 
+        MPG for the same number of Engine cyclinder than Gasoline cars.
+    </p>
+  </div>
+  <div id="barPlot" style="text-align:center">
+    <h2>Box-Plot Chart</h2>
+  </div>
+  <script>
+    var margin = {top: 10, right: 60, bottom: 100, left: 60},
+        width = screen.width - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
+
+    // append the svg object to the body of the page
+    var svg = d3.select("#barPlot")
+      .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform",
+              "translate(" + margin.left + "," + margin.top + ")");
+    
+    // A color scale: one color for each group
+    var myColor = d3.scaleOrdinal()
+      .domain(['2','3','4','6','8','10','12'])
+      .range(d3.schemeSet2);
+
+    
+    // Read the data and compute summary statistics for each specie
+    d3.csv("./data/cars2017.csv", function(data) {
+
+    // Compute quartiles, median, inter quantile range min and max --> these info are then used to draw the box.
+    var sumstat = d3.nest() // nest function allows to group the calculation per level of a factor
+      .key(function(d) { return d.Fuel;})
+      .rollup(function(d) {
+        q1 = d3.quantile(d.map(function(g) { return g.AverageHighwayMPG;}).sort(d3.ascending),.25)
+        median = d3.quantile(d.map(function(g) { return g.AverageHighwayMPG;}).sort(d3.ascending),.5)
+        q3 = d3.quantile(d.map(function(g) { return g.AverageHighwayMPG;}).sort(d3.ascending),.75)
+        interQuantileRange = q3 - q1
+        min = q1 - 1.5 * interQuantileRange
+        max = q3 + 1.5 * interQuantileRange
+        return({q1: q1, median: median, q3: q3, interQuantileRange: interQuantileRange, min: min, max: max})
+      })
+      .entries(data)
+      console.log(sumstat) ;
+
+    // Show the Y scale
+    var y_bp = d3.scaleBand()
+      .range([ height, 0 ])
+      .domain(["Gasoline", "Diesel"])
+      .padding(.4);
+    svg.append("g")
+      .call(d3.axisLeft(y_bp).tickSize(0)).selectAll('text')
+      .attr("transform", "translate(-15,-30)rotate(-90)")
+
+    // Show the X scale
+    var x_bp = d3.scaleLinear()
+      .domain([10,50])
+      .range([0, width])
+    svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x_bp))
+
+    // Color scale
+    var myBarPlotColor = d3.scaleSequential()
+      .interpolator(d3.interpolateInferno)
+      .domain([4,8])
+
+    // Add X axis label:
+    svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("x", width)
+        .attr("y", height + margin.top + 30)
+        .text("Average Highway MPG");
+
+    // Show the main vertical line
+    svg
+      .selectAll("vertLines")
+      .data(sumstat)
+      .enter()
+      .append("line")
+        .attr("x1", function(d){return(x_bp(d.value.min))})
+        .attr("x2", function(d){return(x_bp(d.value.max))})
+        .attr("y1", function(d){return(y_bp(d.key) + y_bp.bandwidth()/2)})
+        .attr("y2", function(d){return(y_bp(d.key) + y_bp.bandwidth()/2)})
+        .attr("stroke", "black")
+        .style("width", 40)
+
+    // rectangle for the main box
+    svg
+      .selectAll("boxes")
+      .data(sumstat)
+      .enter()
+      .append("rect")
+          .attr("x", function(d){return(x_bp(d.value.q1))})
+          .attr("width", function(d){return(x_bp(d.value.q3)-x_bp(d.value.q1))})
+          .attr("y", function(d) { return y_bp(d.key); })
+          .attr("height", y_bp.bandwidth() )
+          .attr("stroke", "black")
+          .style("fill", "#69b3a2")
+          .style("opacity", 0.3)
+
+    // Show the median
+    svg
+      .selectAll("medianLines")
+      .data(sumstat)
+      .enter()
+      .append("line")
+        .attr("y1", function(d){return(y_bp(d.key))})
+        .attr("y2", function(d){return(y_bp(d.key) + y_bp.bandwidth()/2)})
+        .attr("x1", function(d){return(x_bp(d.value.median))})
+        .attr("x2", function(d){return(x_bp(d.value.median))})
+        .attr("stroke", "black")
+        .style("width", 80)
+
+    // create a tooltip
+    var tooltip = d3.select("body")
+      .append("div")
+        .style("opacity", 0)
+        .attr("class", "tooltip")
+        .style("font-size", "16px")
+    
+    var mousemove = function(d) {
+      tooltip
+        .style("opacity", 1)
+        .style("left", (d3.event.pageX+30) + "px")
+        .style("top", (d3.event.pageY+30) + "px")
+        .html("<strong>Make:</strong> <span style='color:red'>" + d.Make + "</span><br><strong>Engine Cylinders:</strong> <span style='color:red'>" + d.EngineCylinders + "</span><br><strong>Avg Highway MPG:</strong> <span style='color:red'>" + d.AverageHighwayMPG + "</span>")
+    }
+    var mouseleave = function(d) {
+      tooltip
+        .transition()
+        .duration(200)
+        .style("opacity", 0)
+    }
+
+    // Add individual points with jitter
+    var jitterWidth = 50
+    svg
+      .selectAll("indPoints")
+      .data(data)
+      .enter()
+      .append("circle")
+        .attr("cx", function(d){ return(x_bp(d.AverageHighwayMPG))})
+        .attr("cy", function(d){ return( y_bp(d.Fuel) + (y_bp.bandwidth()/2) - jitterWidth/2 + Math.random()*jitterWidth )})
+        .attr("r", 4)
+        .style("fill", function(d){ return(myColor(+d.EngineCylinders)) })
+        .attr("stroke", "black")
+        //.on("mouseover", mouseover)
+        .on("mousemove", mousemove)
+        .on("mouseleave", mouseleave)
+
+
+    })
+
+  </script>
+  <div style="text-align:center">
+    <form action="dieselPage.html">
+      <input type="submit" value="Previous Slide"/>
+    </form>
+    Page 3/3 
+    <form action="index.html">
+        <input type="submit" value="Home Slide"/>
+    </form>
+  </div>
+
+ </body>
+</html>
