@@ -45,8 +45,7 @@
    </select>
    <br>
    <svg id="gasoline">
-    <text x="610" y="455" font-size="smaller">MPG reduces with increase in Engine cyclinder 
-    </text>
+    <text x="610" y="55" font-size="smaller">MPG reduces with increase in Engine cyclinder</text>
    </svg>
   </div>
   <script>
@@ -94,6 +93,10 @@
         .attr("x", 0)
         .attr("y", 60)
         .text("Average MPG");
+    /*d3.select("#gasoline").append("text")
+        .attr("x", 0)
+        .attr("y", 60)
+        .text("MPG reduces with increase in Engine cyclinder");*/
 
     // A function that update the chart
     function updateGasoline(selectedGroup) {
