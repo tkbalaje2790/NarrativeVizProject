@@ -63,7 +63,7 @@
    <p style="color:red">(Select different value to see the changes in chart)</p>
    <br>
    <svg id="gasoline">
-    <text x="610" y="55" font-size="smaller">MPG reduces with increase in Engine cyclinder</text>
+    
     <line x1="500" y1="55" x2="1100" y2="90" style="stroke:rgb(255,0,0);stroke-width:2" />
     <line x1="1090" y1="85" x2="1100" y2="90" style="stroke:rgb(255,0,0);stroke-width:2" />
     <line x1="1090" y1="95" x2="1100" y2="90" style="stroke:rgb(255,0,0);stroke-width:2" />
@@ -114,6 +114,13 @@
         .attr("x", 0)
         .attr("y", 60)
         .text("Average MPG");
+
+    //Add annotation
+    d3.select("#gasoline").append("text")
+        .attr("font-size", "smaller")
+        .attr("x", 610)
+        .attr("y", 55)
+        .text("MPG reduces with increase in Engine cyclinder");
     /*d3.select("#gasoline").append("text")
         .attr("x", 0)
         .attr("y", 60)
