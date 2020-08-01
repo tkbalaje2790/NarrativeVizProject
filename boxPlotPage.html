@@ -79,6 +79,13 @@
       .domain(['2','3','4','6','8','10','12'])
       .range(d3.schemeSet2);
 
+    //Add annotation
+    d3.select("#barPlot").append("text")
+        .attr("font-size", "smaller")
+        .attr("x", 430)
+        .attr("y", 25)
+        .style("fill","green")
+        .text("Hover over the circles to get more info");
     
     // Read the data and compute summary statistics for each specie
     d3.csv("./data/cars2017.csv", function(data) {
