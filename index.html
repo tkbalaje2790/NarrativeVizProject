@@ -116,6 +116,12 @@
     //Add annotation
     d3.select("#gasoline").append("text")
         .attr("font-size", "smaller")
+        .attr("x", 430)
+        .attr("y", 25)
+        .style("fill","green")
+        .text("Hover over the bars to get more info");
+    d3.select("#gasoline").append("text")
+        .attr("font-size", "smaller")
         .attr("x", 610)
         .attr("y", 55)
         .text("MPG reduces with increase in Engine cyclinder");
@@ -131,13 +137,15 @@
         .attr("y1", 85)
         .attr("x2", 1100)
         .attr("y2", 90)
-        .style("stroke:rgb(255,0,0);stroke-width:2"); 
+        .style("stroke","rgb(255,0,0)")
+        .style("stroke-width","2");
     d3.select("#gasoline").append("line")
         .attr("x1", 1090)
         .attr("y1", 95)
         .attr("x2", 1100)
         .attr("y2", 90);
-        //.style("stroke:rgb(255,0,0);stroke-width:2");       
+        .style("stroke","rgb(255,0,0)")
+        .style("stroke-width","2");      
     /*d3.select("#gasoline").append("text")
         .attr("x", 0)
         .attr("y", 60)
